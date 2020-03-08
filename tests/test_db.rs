@@ -15,7 +15,7 @@
 mod util;
 
 use crate::util::DBPath;
-use rocksdb::{Error, IteratorMode, Options, Snapshot, WriteBatch, DB};
+use rocksdb::{Error, IteratorMode, Options, ReadOptions, Snapshot, WriteBatch, DB};
 use std::sync::Arc;
 use std::{mem, thread};
 
@@ -85,7 +85,9 @@ fn writebatch_works() {
             assert_eq!(batch.len(), 0);
             assert!(batch.is_empty());
             let _ = batch.put(b"k1", b"v1111");
-            assert_eq!(batch.len(), 1);
+            let _ = batch.put(b"k2", b"v2222");
+            let _ = batch.put(b"k3", b"v3333");
+            assert_eq!(batch.len(), 3);
             assert!(!batch.is_empty());
             assert!(db.get(b"k1").unwrap().is_none());
             assert!(db.write(batch).is_ok());
@@ -100,6 +102,16 @@ fn writebatch_works() {
             assert!(!batch.is_empty());
             assert!(db.write(batch).is_ok());
             assert!(db.get(b"k1").unwrap().is_none());
+        }
+        {
+            // test delete_range
+            let mut batch = WriteBatch::default();
+            let _ = batch.delete_range(b"k2", b"k4");
+            assert_eq!(batch.len(), 1);
+            assert!(!batch.is_empty());
+            assert!(db.write(batch).is_ok());
+            assert!(db.get(b"k2").unwrap().is_none());
+            assert!(db.get(b"k3").unwrap().is_none());
         }
         {
             // test size_in_bytes
@@ -129,6 +141,51 @@ fn iterator_test() {
             let (key, value) = data[idx];
             assert_eq!((&key[..], &value[..]), (db_key.as_ref(), db_value.as_ref()));
         }
+    }
+}
+
+#[test]
+fn iterator_test_past_end() {
+    let path = DBPath::new("_rust_rocksdb_iteratortest_past_end");
+    {
+        let db = DB::open_default(&path).unwrap();
+        db.put(b"k1", b"v1111").unwrap();
+        let mut iter = db.iterator(IteratorMode::Start);
+        assert!(iter.next().is_some());
+        assert!(iter.next().is_none());
+        assert!(iter.next().is_none());
+    }
+}
+
+#[test]
+fn iterator_test_tailing() {
+    let path = DBPath::new("_rust_rocksdb_iteratortest_tailing");
+    {
+        let data = [(b"k1", b"v1"), (b"k2", b"v2"), (b"k3", b"v3")];
+        let mut ro = ReadOptions::default();
+        ro.set_tailing(true);
+        let db = DB::open_default(&path).unwrap();
+
+        let mut data_iter = data.iter();
+        let (k, v) = data_iter.next().unwrap();
+        let r = db.put(k, v);
+        assert!(r.is_ok());
+
+        let tail_iter = db.iterator_opt(IteratorMode::Start, &ro);
+        for (k, v) in data_iter {
+            let r = db.put(k, v);
+            assert!(r.is_ok());
+        }
+
+        let mut tot = 0;
+        for (i, (k, v)) in tail_iter.enumerate() {
+            assert_eq!(
+                (k.to_vec(), v.to_vec()),
+                (data[i].0.to_vec(), data[i].1.to_vec())
+            );
+            tot = tot + 1;
+        }
+        assert_eq!(tot, data.len());
     }
 }
 
