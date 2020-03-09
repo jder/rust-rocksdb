@@ -33,7 +33,8 @@ fn backup_restore() {
         let value = db.get(b"k1");
         assert_eq!(value.unwrap().unwrap(), b"v1111");
         {
-            let backup_path = "_rust_rocksdb_backup_path";
+            let dir = tempfile::tempdir().unwrap();
+            let backup_path = dir.as_ref().join("backup_path");
             let backup_opts = BackupEngineOptions::default();
             let mut backup_engine = BackupEngine::open(&backup_opts, &backup_path).unwrap();
             assert!(backup_engine.create_new_backup(&db).is_ok());

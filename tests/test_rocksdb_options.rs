@@ -53,8 +53,7 @@ fn test_set_level_compaction_dynamic_level_bytes() {
 
 #[test]
 fn test_block_based_options() {
-    let path = "_rust_rocksdb_test_block_based_options";
-    let n = DBPath::new(path);
+    let n = DBPath::new("test_block_based_options");
     {
         let mut opts = Options::default();
         opts.create_if_missing(true);
