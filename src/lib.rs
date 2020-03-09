@@ -19,8 +19,10 @@
 //!
 //! ```
 //! use rocksdb::{DB, Options};
-//! // NB: db is automatically closed at end of lifetime
-//! let path = "_path_for_rocksdb_storage";
+//!
+//! # let dir = tempfile::tempdir().unwrap();
+//! # std::env::set_current_dir(&dir).unwrap();
+//! let path = "storage_path";
 //! {
 //!    let db = DB::open_default(path).unwrap();
 //!    db.put(b"my key", b"my value").unwrap();
@@ -39,7 +41,10 @@
 //! ```
 //! use rocksdb::{DB, ColumnFamilyDescriptor, Options};
 //!
-//! let path = "_path_for_rocksdb_storage_with_cfs";
+//!
+//! # let dir = tempfile::tempdir().unwrap();
+//! # std::env::set_current_dir(&dir).unwrap();
+//! let path = "storage_path";
 //! let mut cf_opts = Options::default();
 //! cf_opts.set_max_write_buffer_number(16);
 //! let cf = ColumnFamilyDescriptor::new("cf1", cf_opts);
@@ -236,7 +241,10 @@ pub struct Options {
 /// ```
 /// use rocksdb::{DB, Options, FlushOptions};
 ///
-/// let path = "_path_for_rocksdb_storageY";
+///
+/// # let dir = tempfile::tempdir().unwrap();
+/// # std::env::set_current_dir(&dir).unwrap();
+/// let path = "storage_path";
 /// {
 ///     let db = DB::open_default(path).unwrap();
 ///
@@ -260,7 +268,10 @@ pub struct FlushOptions {
 /// ```
 /// use rocksdb::{DB, Options, WriteBatch, WriteOptions};
 ///
-/// let path = "_path_for_rocksdb_storageY";
+///
+/// # let dir = tempfile::tempdir().unwrap();
+/// # std::env::set_current_dir(&dir).unwrap();
+/// let path = "storage_path";
 /// {
 ///     let db = DB::open_default(path).unwrap();
 ///     let mut batch = WriteBatch::default();

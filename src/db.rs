@@ -66,7 +66,9 @@ pub enum DBRecoveryMode {
 /// ```
 /// use rocksdb::{DB, Options, WriteBatch};
 ///
-/// let path = "_path_for_rocksdb_storage1";
+/// # let dir = tempfile::tempdir().unwrap();
+/// # std::env::set_current_dir(&dir).unwrap();
+/// let path = "storage_path";
 /// {
 ///     let db = DB::open_default(path).unwrap();
 ///     let mut batch = WriteBatch::default();
@@ -90,7 +92,9 @@ pub struct ReadOptions {
 /// ```
 /// use rocksdb::{DB, IteratorMode, Options};
 ///
-/// let path = "_path_for_rocksdb_storage3";
+/// # let dir = tempfile::tempdir().unwrap();
+/// # std::env::set_current_dir(&dir).unwrap();
+/// let path = "storage_path";
 /// {
 ///     let db = DB::open_default(path).unwrap();
 ///     let snapshot = db.snapshot(); // Creates a longer-term snapshot of the DB, but closed when goes out of scope
@@ -120,7 +124,9 @@ unsafe impl<'a> Sync for Snapshot<'a> {}
 /// ```
 /// use rocksdb::{DB, Options};
 ///
-/// let path = "_path_for_rocksdb_storage4";
+/// # let dir = tempfile::tempdir().unwrap();
+/// # std::env::set_current_dir(&dir).unwrap();
+/// let path = "storage_path";
 /// {
 ///     let db = DB::open_default(path).unwrap();
 ///     let mut iter = db.raw_iterator();
@@ -231,7 +237,9 @@ impl Drop for DBWALIterator {
 /// ```
 /// use rocksdb::{DB, Direction, IteratorMode, Options};
 ///
-/// let path = "_path_for_rocksdb_storage2";
+/// # let dir = tempfile::tempdir().unwrap();
+/// # std::env::set_current_dir(&dir).unwrap();
+/// let path = "storage_path";
 /// {
 ///     let db = DB::open_default(path).unwrap();
 ///     let mut iter = db.iterator(IteratorMode::Start); // Always iterates forward
@@ -323,7 +331,9 @@ impl<'a> DBRawIterator<'a> {
     /// ```rust
     /// use rocksdb::{DB, Options};
     ///
-    /// let path = "_path_for_rocksdb_storage5";
+    /// # let dir = tempfile::tempdir().unwrap();
+    /// # std::env::set_current_dir(&dir).unwrap();
+    /// let path = "storage_path";
     /// {
     ///     let db = DB::open_default(path).unwrap();
     ///     let mut iter = db.raw_iterator();
@@ -360,7 +370,9 @@ impl<'a> DBRawIterator<'a> {
     /// ```rust
     /// use rocksdb::{DB, Options};
     ///
-    /// let path = "_path_for_rocksdb_storage6";
+    /// # let dir = tempfile::tempdir().unwrap();
+    /// # std::env::set_current_dir(&dir).unwrap();
+    /// let path = "storage_path";
     /// {
     ///     let db = DB::open_default(path).unwrap();
     ///     let mut iter = db.raw_iterator();
@@ -400,7 +412,9 @@ impl<'a> DBRawIterator<'a> {
     /// ```rust
     /// use rocksdb::{DB, Options};
     ///
-    /// let path = "_path_for_rocksdb_storage7";
+    /// # let dir = tempfile::tempdir().unwrap();
+    /// # std::env::set_current_dir(&dir).unwrap();
+    /// let path = "storage_path";
     /// {
     ///     let db = DB::open_default(path).unwrap();
     ///     let mut iter = db.raw_iterator();
@@ -439,7 +453,9 @@ impl<'a> DBRawIterator<'a> {
     /// ```rust
     /// use rocksdb::{DB, Options};
     ///
-    /// let path = "_path_for_rocksdb_storage8";
+    /// # let dir = tempfile::tempdir().unwrap();
+    /// # std::env::set_current_dir(&dir).unwrap();
+    /// let path = "storage_path";
     /// {
     ///     let db = DB::open_default(path).unwrap();
     ///     let mut iter = db.raw_iterator();

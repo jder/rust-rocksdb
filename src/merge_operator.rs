@@ -38,7 +38,9 @@
 //! }
 //!
 //! fn main() {
-//!    let path = "_rust_path_to_rocksdb";
+//!    # let dir = tempfile::tempdir().unwrap();
+//!    # std::env::set_current_dir(&dir).unwrap();
+//!    let path = "storage_path";
 //!    let mut opts = Options::default();
 //!    opts.create_if_missing(true);
 //!    opts.set_merge_operator("test operator", concat_merge, None);
