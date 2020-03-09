@@ -5,7 +5,7 @@ use rocksdb::{Options, DB};
 
 #[test]
 fn test_pinnable_slice() {
-    let path = DBPath::new("_rust_rocksdb_pinnable_slice_test");
+    let path = DBPath::new("pinnable_slice_test");
 
     let mut opts = Options::default();
     opts.create_if_missing(true);

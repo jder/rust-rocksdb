@@ -23,7 +23,7 @@ fn cba(input: &[u8]) -> Box<[u8]> {
 
 #[test]
 fn test_iterator() {
-    let n = DBPath::new("_rust_rocksdb_iteratortest");
+    let n = DBPath::new("iteratortest");
     {
         let k1: Box<[u8]> = b"k1".to_vec().into_boxed_slice();
         let k2: Box<[u8]> = b"k2".to_vec().into_boxed_slice();
@@ -172,7 +172,7 @@ fn key(k: &[u8]) -> Box<[u8]> {
 
 #[test]
 fn test_prefix_iterator() {
-    let n = DBPath::new("_rust_rocksdb_prefixiteratortest");
+    let n = DBPath::new("prefixiteratortest");
     {
         let a1: Box<[u8]> = key(b"aaa1");
         let a2: Box<[u8]> = key(b"aaa2");
@@ -216,7 +216,7 @@ fn test_prefix_iterator_uses_full_prefix() {
     // as long as the prefix extracted from `key` matches the
     // prefix extracted from `prefix`.
 
-    let path = DBPath::new("_rust_rocksdb_prefixiteratorusesfullprefixtest");
+    let path = DBPath::new("prefixiteratorusesfullprefixtest");
     {
         let data = [
             ([0, 0, 0, 0], b"111"),
@@ -304,7 +304,7 @@ fn custom_iter<'a>(db: &'a DB) -> impl Iterator<Item = usize> + 'a {
 
 #[test]
 fn test_custom_iterator() {
-    let path = DBPath::new("_rust_rocksdb_customiterator_test");
+    let path = DBPath::new("customiterator_test");
     {
         let mut opts = Options::default();
         opts.create_if_missing(true);

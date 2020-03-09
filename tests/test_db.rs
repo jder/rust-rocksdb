@@ -21,7 +21,7 @@ use std::{mem, thread};
 
 #[test]
 fn external() {
-    let path = DBPath::new("_rust_rocksdb_externaltest");
+    let path = DBPath::new("externaltest");
 
     {
         let db = DB::open_default(&path).unwrap();
@@ -38,7 +38,7 @@ fn external() {
 
 #[test]
 fn db_vector_as_ref_byte_slice() {
-    let path = DBPath::new("_rust_rocksdb_db_vector_as_ref_byte_slice");
+    let path = DBPath::new("db_vector_as_ref_byte_slice");
 
     {
         let db = DB::open_default(&path).unwrap();
@@ -58,7 +58,7 @@ fn get_byte_slice<T: AsRef<[u8]>>(source: &'_ T) -> &'_ [u8] {
 
 #[test]
 fn errors_do_stuff() {
-    let path = DBPath::new("_rust_rocksdb_error");
+    let path = DBPath::new("errorpath");
     let _db = DB::open_default(&path).unwrap();
     let opts = Options::default();
     // The DB will still be open when we try to destroy it and the lock should fail.
@@ -66,7 +66,7 @@ fn errors_do_stuff() {
         Err(s) => {
             let message = s.to_string();
             assert!(message.find("IO error:").is_some());
-            assert!(message.find("_rust_rocksdb_error").is_some());
+            assert!(message.find("errorpath").is_some());
             assert!(message.find("/LOCK:").is_some());
         }
         Ok(_) => panic!("should fail"),
@@ -75,7 +75,7 @@ fn errors_do_stuff() {
 
 #[test]
 fn writebatch_works() {
-    let path = DBPath::new("_rust_rocksdb_writebacktest");
+    let path = DBPath::new("writebacktest");
     {
         let db = DB::open_default(&path).unwrap();
         {
@@ -126,7 +126,7 @@ fn writebatch_works() {
 
 #[test]
 fn iterator_test() {
-    let path = DBPath::new("_rust_rocksdb_iteratortest");
+    let path = DBPath::new("iteratortest");
     {
         let data = [(b"k1", b"v1111"), (b"k2", b"v2222"), (b"k3", b"v3333")];
         let db = DB::open_default(&path).unwrap();
@@ -146,7 +146,7 @@ fn iterator_test() {
 
 #[test]
 fn iterator_test_past_end() {
-    let path = DBPath::new("_rust_rocksdb_iteratortest_past_end");
+    let path = DBPath::new("iteratortest_past_end");
     {
         let db = DB::open_default(&path).unwrap();
         db.put(b"k1", b"v1111").unwrap();
@@ -159,7 +159,7 @@ fn iterator_test_past_end() {
 
 #[test]
 fn iterator_test_tailing() {
-    let path = DBPath::new("_rust_rocksdb_iteratortest_tailing");
+    let path = DBPath::new("iteratortest_tailing");
     {
         let data = [(b"k1", b"v1"), (b"k2", b"v2"), (b"k3", b"v3")];
         let mut ro = ReadOptions::default();
@@ -191,7 +191,7 @@ fn iterator_test_tailing() {
 
 #[test]
 fn snapshot_test() {
-    let path = DBPath::new("_rust_rocksdb_snapshottest");
+    let path = DBPath::new("snapshottest");
     {
         let db = DB::open_default(&path).unwrap();
 
@@ -229,7 +229,7 @@ impl SnapshotWrapper {
 
 #[test]
 fn sync_snapshot_test() {
-    let path = DBPath::new("_rust_rocksdb_sync_snapshottest");
+    let path = DBPath::new("sync_snapshottest");
     let db = DB::open_default(&path).unwrap();
 
     assert!(db.put(b"k1", b"v1").is_ok());
@@ -248,7 +248,7 @@ fn sync_snapshot_test() {
 
 #[test]
 fn set_option_test() {
-    let path = DBPath::new("_rust_rocksdb_set_optionstest");
+    let path = DBPath::new("set_optionstest");
     {
         let db = DB::open_default(&path).unwrap();
         // set an option to valid values
@@ -285,7 +285,7 @@ fn set_option_test() {
 
 #[test]
 fn test_sequence_number() {
-    let path = DBPath::new("_rust_rocksdb_test_sequence_number");
+    let path = DBPath::new("test_sequence_number");
     {
         let db = DB::open_default(&path).unwrap();
         assert_eq!(db.latest_sequence_number(), 0);
@@ -310,7 +310,7 @@ impl rocksdb::WriteBatchIterator for OperationCounts {
 
 #[test]
 fn test_get_updates_since_empty() {
-    let path = DBPath::new("_rust_rocksdb_test_get_updates_since_empty");
+    let path = DBPath::new("test_get_updates_since_empty");
     let db = DB::open_default(&path).unwrap();
     // get_updates_since() on an empty database
     let mut iter = db.get_updates_since(0).unwrap();
@@ -319,7 +319,7 @@ fn test_get_updates_since_empty() {
 
 #[test]
 fn test_get_updates_since_multiple_batches() {
-    let path = DBPath::new("_rust_rocksdb_test_get_updates_since_multiple_batches");
+    let path = DBPath::new("test_get_updates_since_multiple_batches");
     let db = DB::open_default(&path).unwrap();
     // add some records and collect sequence numbers,
     // verify 3 batches of 1 put each were done
@@ -349,7 +349,7 @@ fn test_get_updates_since_multiple_batches() {
 
 #[test]
 fn test_get_updates_since_one_batch() {
-    let path = DBPath::new("_rust_rocksdb_test_get_updates_since_one_batch");
+    let path = DBPath::new("test_get_updates_since_one_batch");
     let db = DB::open_default(&path).unwrap();
     db.put(b"key2", b"value2").unwrap();
     // some puts and deletes in a single batch,
@@ -376,7 +376,7 @@ fn test_get_updates_since_one_batch() {
 
 #[test]
 fn test_get_updates_since_nothing() {
-    let path = DBPath::new("_rust_rocksdb_test_get_updates_since_nothing");
+    let path = DBPath::new("test_get_updates_since_nothing");
     let db = DB::open_default(&path).unwrap();
     // get_updates_since() with no new changes
     db.put(b"key1", b"value1").unwrap();
@@ -387,7 +387,7 @@ fn test_get_updates_since_nothing() {
 
 #[test]
 fn test_get_updates_since_out_of_range() {
-    let path = DBPath::new("_rust_rocksdb_test_get_updates_since_out_of_range");
+    let path = DBPath::new("test_get_updates_since_out_of_range");
     let db = DB::open_default(&path).unwrap();
     db.put(b"key1", b"value1").unwrap();
     // get_updates_since() with an out of bounds sequence number

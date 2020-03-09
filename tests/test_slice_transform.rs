@@ -5,7 +5,7 @@ use rocksdb::{Options, SliceTransform, DB};
 
 #[test]
 pub fn test_slice_transform() {
-    let db_path = DBPath::new("_rust_rocksdb_slicetransform_test");
+    let db_path = DBPath::new("slicetransform_test");
     {
         let a1: Box<[u8]> = key(b"aaa1");
         let a2: Box<[u8]> = key(b"aaa2");

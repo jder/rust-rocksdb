@@ -20,7 +20,7 @@ use std::{fs, io::Read as _};
 
 #[test]
 fn test_set_num_levels() {
-    let n = DBPath::new("_rust_rocksdb_test_set_num_levels");
+    let n = DBPath::new("test_set_num_levels");
     {
         let mut opts = Options::default();
         opts.create_if_missing(true);
@@ -31,7 +31,7 @@ fn test_set_num_levels() {
 
 #[test]
 fn test_increase_parallelism() {
-    let n = DBPath::new("_rust_rocksdb_test_increase_parallelism");
+    let n = DBPath::new("test_increase_parallelism");
     {
         let mut opts = Options::default();
         opts.create_if_missing(true);
@@ -42,7 +42,7 @@ fn test_increase_parallelism() {
 
 #[test]
 fn test_set_level_compaction_dynamic_level_bytes() {
-    let n = DBPath::new("_rust_rocksdb_test_set_level_compaction_dynamic_level_bytes");
+    let n = DBPath::new("test_set_level_compaction_dynamic_level_bytes");
     {
         let mut opts = Options::default();
         opts.create_if_missing(true);
