@@ -117,13 +117,14 @@ fn test_filter(level: u32, key: &[u8], value: &[u8]) -> Decision {
 #[test]
 fn compaction_filter_test() {
     use crate::{Options, DB};
+    extern crate test_utilities;
 
-    let path = "_rust_rocksdb_filtertest";
+    let path = test_utilities::DBPath::new("filtertest");
     let mut opts = Options::default();
     opts.create_if_missing(true);
     opts.set_compaction_filter("test", test_filter);
     {
-        let db = DB::open(&opts, path).unwrap();
+        let db = DB::open(&opts, &path).unwrap();
         let _ = db.put(b"k1", b"a");
         let _ = db.put(b"_k", b"b");
         let _ = db.put(b"%k", b"c");
@@ -132,6 +133,4 @@ fn compaction_filter_test() {
         assert!(db.get(b"_k").unwrap().is_none());
         assert_eq!(&*db.get(b"%k").unwrap().unwrap(), b"secret");
     }
-    let result = DB::destroy(&opts, path);
-    assert!(result.is_ok());
 }

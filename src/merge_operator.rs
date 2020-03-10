@@ -228,13 +228,14 @@ mod test {
     #[test]
     fn mergetest() {
         use crate::{Options, DB};
+        extern crate test_utilities;
 
-        let path = "_rust_rocksdb_mergetest";
+        let path = test_utilities::DBPath::new("mergetest");
         let mut opts = Options::default();
         opts.create_if_missing(true);
         opts.set_merge_operator("test operator", test_provided_merge, None);
         {
-            let db = DB::open(&opts, path).unwrap();
+            let db = DB::open(&opts, &path).unwrap();
             let p = db.put(b"k1", b"a");
             assert!(p.is_ok());
             let _ = db.merge(b"k1", b"b");
@@ -258,7 +259,6 @@ mod test {
             assert!(db.delete(b"k1").is_ok());
             assert!(db.get(b"k1").unwrap().is_none());
         }
-        assert!(DB::destroy(&opts, path).is_ok());
     }
 
     unsafe fn to_slice<T: Sized>(p: &T) -> &[u8] {
@@ -334,8 +334,9 @@ mod test {
         use crate::{DBCompactionStyle, Options, DB};
         use std::sync::Arc;
         use std::thread;
+        extern crate test_utilities;
 
-        let path = "_rust_rocksdb_partial_mergetest";
+        let path = test_utilities::DBPath::new("partial_mergetest");
         let mut opts = Options::default();
         opts.create_if_missing(true);
         opts.set_compaction_style(DBCompactionStyle::Universal);
@@ -347,7 +348,7 @@ mod test {
             Some(test_counting_partial_merge),
         );
         {
-            let db = Arc::new(DB::open(&opts, path).unwrap());
+            let db = Arc::new(DB::open(&opts, &path).unwrap());
             let _ = db.delete(b"k1");
             let _ = db.delete(b"k2");
             let _ = db.merge(b"k1", b"a");
@@ -447,6 +448,5 @@ mod test {
                 _ => panic!("value not present"),
             }
         }
-        assert!(DB::destroy(&opts, path).is_ok());
     }
 }
