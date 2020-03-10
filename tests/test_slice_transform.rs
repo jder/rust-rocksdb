@@ -1,7 +1,7 @@
-mod util;
+extern crate test_utilities;
 
-use crate::util::DBPath;
 use rocksdb::{Options, SliceTransform, DB};
+use test_utilities::DBPath;
 
 #[test]
 pub fn test_slice_transform() {

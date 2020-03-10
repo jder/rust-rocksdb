@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-mod util;
+extern crate test_utilities;
 
-use crate::util::DBPath;
 use rocksdb::{Direction, IteratorMode, MemtableFactory, Options, DB};
+use test_utilities::DBPath;
 
 fn cba(input: &[u8]) -> Box<[u8]> {
     input.to_vec().into_boxed_slice()

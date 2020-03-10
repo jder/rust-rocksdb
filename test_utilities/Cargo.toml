@@ -1,0 +1,10 @@
+[package]
+name = "test_utilities"
+version = "0.1.0"
+authors = ["Tyler Neely <t@jujit.su>", "David Greenberg <dsg123456789@gmail.com>"]
+license = "Apache-2.0"
+edition = "2018"
+
+[dependencies]
+tempfile = "3"
+rocksdb = { path = ".." }

@@ -1,7 +1,7 @@
-mod util;
+extern crate test_utilities;
 
-use crate::util::DBPath;
 use rocksdb::{Options, DB};
+use test_utilities::DBPath;
 
 #[test]
 fn test_pinnable_slice() {

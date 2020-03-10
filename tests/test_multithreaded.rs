@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-mod util;
+extern crate test_utilities;
 
-use crate::util::DBPath;
 use rocksdb::DB;
 use std::sync::Arc;
 use std::thread;
+use test_utilities::DBPath;
 
 const N: usize = 100_000;
 

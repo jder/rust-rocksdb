@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-mod util;
-use crate::util::DBPath;
+extern crate test_utilities;
+
+use test_utilities::DBPath;
 
 use rocksdb::{
     backup::{BackupEngine, BackupEngineOptions, RestoreOptions},

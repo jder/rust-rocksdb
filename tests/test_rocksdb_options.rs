@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-mod util;
+extern crate test_utilities;
 
-use crate::util::DBPath;
 use rocksdb::{BlockBasedOptions, Options, ReadOptions, DB};
 use std::{fs, io::Read as _};
+use test_utilities::DBPath;
 
 #[test]
 fn test_set_num_levels() {

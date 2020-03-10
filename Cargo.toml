@@ -28,5 +28,6 @@ libc = "0.2"
 librocksdb-sys = { path = "librocksdb-sys", version = "6.4.6" }
 
 [dev-dependencies]
+test_utilities = { path = "test_utilities" }
 trybuild = "1.0.21"
 tempfile = "3.1.0"

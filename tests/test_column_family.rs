@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-mod util;
+extern crate test_utilities;
 
-use crate::util::DBPath;
 use rocksdb::{ColumnFamilyDescriptor, MergeOperands, Options, DB};
+use test_utilities::DBPath;
 
 #[test]
 fn test_column_family() {
