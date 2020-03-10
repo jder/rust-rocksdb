@@ -15,11 +15,11 @@
 extern crate test_utilities;
 
 use rocksdb::{Options, DB};
-use test_utilities::DBPath;
+use test_utilities::TemporaryDBPath;
 
 #[test]
 fn property_test() {
-    let n = DBPath::new("property_test");
+    let n = TemporaryDBPath::new("property_test");
     {
         let db = DB::open_default(&n).unwrap();
         let value = db.property_value("rocksdb.stats").unwrap().unwrap();
@@ -30,7 +30,7 @@ fn property_test() {
 
 #[test]
 fn property_cf_test() {
-    let n = DBPath::new("property_cf_test");
+    let n = TemporaryDBPath::new("property_cf_test");
     {
         let opts = Options::default();
         let mut db = DB::open_default(&n).unwrap();
@@ -44,7 +44,7 @@ fn property_cf_test() {
 
 #[test]
 fn property_int_test() {
-    let n = DBPath::new("property_int_test");
+    let n = TemporaryDBPath::new("property_int_test");
     {
         let db = DB::open_default(&n).unwrap();
         let value = db
@@ -57,7 +57,7 @@ fn property_int_test() {
 
 #[test]
 fn property_int_cf_test() {
-    let n = DBPath::new("property_int_cf_test");
+    let n = TemporaryDBPath::new("property_int_cf_test");
     {
         let opts = Options::default();
         let mut db = DB::open_default(&n).unwrap();

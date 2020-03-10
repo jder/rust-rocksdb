@@ -119,7 +119,7 @@ fn compaction_filter_test() {
     use crate::{Options, DB};
     extern crate test_utilities;
 
-    let path = test_utilities::DBPath::new("filtertest");
+    let path = test_utilities::TemporaryDBPath::new("filtertest");
     let mut opts = Options::default();
     opts.create_if_missing(true);
     opts.set_compaction_filter("test", test_filter);

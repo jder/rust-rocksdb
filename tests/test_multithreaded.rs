@@ -17,13 +17,13 @@ extern crate test_utilities;
 use rocksdb::DB;
 use std::sync::Arc;
 use std::thread;
-use test_utilities::DBPath;
+use test_utilities::TemporaryDBPath;
 
 const N: usize = 100_000;
 
 #[test]
 pub fn test_multithreaded() {
-    let n = DBPath::new("multithreadtest");
+    let n = TemporaryDBPath::new("multithreadtest");
     {
         let db = DB::open_default(&n).unwrap();
         let db = Arc::new(db);

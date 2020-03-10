@@ -15,11 +15,11 @@
 extern crate test_utilities;
 
 use rocksdb::{ColumnFamilyDescriptor, MergeOperands, Options, DB};
-use test_utilities::DBPath;
+use test_utilities::TemporaryDBPath;
 
 #[test]
 fn test_column_family() {
-    let n = DBPath::new("cftest");
+    let n = TemporaryDBPath::new("cftest");
 
     // should be able to create column families
     {
@@ -91,7 +91,7 @@ fn test_column_family() {
 fn test_can_open_db_with_results_of_list_cf() {
     // Test scenario derived from GitHub issue #175 and 177
 
-    let n = DBPath::new("cftest_with_list_cf");
+    let n = TemporaryDBPath::new("cftest_with_list_cf");
 
     {
         let mut opts = Options::default();
@@ -113,7 +113,7 @@ fn test_can_open_db_with_results_of_list_cf() {
 
 #[test]
 fn test_create_missing_column_family() {
-    let n = DBPath::new("missing_cftest");
+    let n = TemporaryDBPath::new("missing_cftest");
 
     // should be able to create new column families when opening a new database
     {
@@ -131,7 +131,7 @@ fn test_create_missing_column_family() {
 #[test]
 #[ignore]
 fn test_merge_operator() {
-    let n = DBPath::new("cftest_merge");
+    let n = TemporaryDBPath::new("cftest_merge");
     // TODO should be able to write, read, merge, batch, and iterate over a cf
     {
         let mut opts = Options::default();
@@ -193,7 +193,7 @@ fn test_provided_merge(
 
 #[test]
 fn test_column_family_with_options() {
-    let n = DBPath::new("cf_with_optionstest");
+    let n = TemporaryDBPath::new("cf_with_optionstest");
     {
         let mut cfopts = Options::default();
         cfopts.set_max_write_buffer_number(16);
@@ -237,7 +237,7 @@ fn test_column_family_with_options() {
 
 #[test]
 fn test_create_duplicate_column_family() {
-    let n = DBPath::new("create_duplicate_column_family");
+    let n = TemporaryDBPath::new("create_duplicate_column_family");
     {
         let mut opts = Options::default();
         opts.create_if_missing(true);

@@ -14,7 +14,7 @@
 
 extern crate test_utilities;
 
-use test_utilities::DBPath;
+use test_utilities::TemporaryDBPath;
 
 use rocksdb::{
     backup::{BackupEngine, BackupEngineOptions, RestoreOptions},
@@ -24,8 +24,8 @@ use rocksdb::{
 #[test]
 fn backup_restore() {
     // create backup
-    let path = DBPath::new("backup_test");
-    let restore_path = DBPath::new("restore_from_backup_path");
+    let path = TemporaryDBPath::new("backup_test");
+    let restore_path = TemporaryDBPath::new("restore_from_backup_path");
     let mut opts = Options::default();
     opts.create_if_missing(true);
     {
