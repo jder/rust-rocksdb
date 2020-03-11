@@ -5,7 +5,7 @@ use test_utilities::TemporaryDBPath;
 
 #[test]
 fn test_pinnable_slice() {
-    let path = TemporaryDBPath::new("pinnable_slice_test");
+    let path = TemporaryDBPath::new();
 
     let mut opts = Options::default();
     opts.create_if_missing(true);

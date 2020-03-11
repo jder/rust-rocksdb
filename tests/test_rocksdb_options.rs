@@ -20,7 +20,7 @@ use test_utilities::TemporaryDBPath;
 
 #[test]
 fn test_set_num_levels() {
-    let n = TemporaryDBPath::new("test_set_num_levels");
+    let n = TemporaryDBPath::new();
     {
         let mut opts = Options::default();
         opts.create_if_missing(true);
@@ -31,7 +31,7 @@ fn test_set_num_levels() {
 
 #[test]
 fn test_increase_parallelism() {
-    let n = TemporaryDBPath::new("test_increase_parallelism");
+    let n = TemporaryDBPath::new();
     {
         let mut opts = Options::default();
         opts.create_if_missing(true);
@@ -42,7 +42,7 @@ fn test_increase_parallelism() {
 
 #[test]
 fn test_set_level_compaction_dynamic_level_bytes() {
-    let n = TemporaryDBPath::new("test_set_level_compaction_dynamic_level_bytes");
+    let n = TemporaryDBPath::new();
     {
         let mut opts = Options::default();
         opts.create_if_missing(true);
@@ -53,7 +53,7 @@ fn test_set_level_compaction_dynamic_level_bytes() {
 
 #[test]
 fn test_block_based_options() {
-    let n = TemporaryDBPath::new("test_block_based_options");
+    let n = TemporaryDBPath::new();
     {
         let mut opts = Options::default();
         opts.create_if_missing(true);

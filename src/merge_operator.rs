@@ -230,7 +230,7 @@ mod test {
         use crate::{Options, DB};
         extern crate test_utilities;
 
-        let path = test_utilities::TemporaryDBPath::new("mergetest");
+        let path = test_utilities::TemporaryDBPath::new();
         let mut opts = Options::default();
         opts.create_if_missing(true);
         opts.set_merge_operator("test operator", test_provided_merge, None);
@@ -336,7 +336,7 @@ mod test {
         use std::thread;
         extern crate test_utilities;
 
-        let path = test_utilities::TemporaryDBPath::new("partial_mergetest");
+        let path = test_utilities::TemporaryDBPath::new();
         let mut opts = Options::default();
         opts.create_if_missing(true);
         opts.set_compaction_style(DBCompactionStyle::Universal);

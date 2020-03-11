@@ -20,7 +20,7 @@ use test_utilities::TemporaryDBPath;
 #[test]
 pub fn test_single_checkpoint() {
     // Create DB with some data
-    let db_path = TemporaryDBPath::new("db1");
+    let db_path = TemporaryDBPath::new();
 
     let mut opts = Options::default();
     opts.create_if_missing(true);
@@ -33,7 +33,7 @@ pub fn test_single_checkpoint() {
 
     // Create checkpoint
     let cp1 = Checkpoint::new(&db).unwrap();
-    let cp1_path = TemporaryDBPath::new("cp1");
+    let cp1_path = TemporaryDBPath::new();
     cp1.create_checkpoint(&cp1_path).unwrap();
 
     // Verify checkpoint
@@ -48,7 +48,7 @@ pub fn test_single_checkpoint() {
 #[test]
 pub fn test_multi_checkpoints() {
     // Create DB with some data
-    let db_path = TemporaryDBPath::new("db1");
+    let db_path = TemporaryDBPath::new();
 
     let mut opts = Options::default();
     opts.create_if_missing(true);
@@ -61,7 +61,7 @@ pub fn test_multi_checkpoints() {
 
     // Create first checkpoint
     let cp1 = Checkpoint::new(&db).unwrap();
-    let cp1_path = TemporaryDBPath::new("cp1");
+    let cp1_path = TemporaryDBPath::new();
     cp1.create_checkpoint(&cp1_path).unwrap();
 
     // Verify checkpoint
@@ -82,7 +82,7 @@ pub fn test_multi_checkpoints() {
 
     // Create another checkpoint
     let cp2 = Checkpoint::new(&db).unwrap();
-    let cp2_path = TemporaryDBPath::new("cp2");
+    let cp2_path = TemporaryDBPath::new();
     cp2.create_checkpoint(&cp2_path).unwrap();
 
     // Verify second checkpoint

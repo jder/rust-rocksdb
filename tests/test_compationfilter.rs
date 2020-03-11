@@ -30,7 +30,7 @@ fn test_filter(level: u32, key: &[u8], value: &[u8]) -> CompactionDecision {
 
 #[test]
 fn compaction_filter_test() {
-    let path = TemporaryDBPath::new("filtertest");
+    let path = TemporaryDBPath::new();
     let mut opts = Options::default();
     opts.create_if_missing(true);
     opts.set_compaction_filter("test", test_filter);

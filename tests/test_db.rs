@@ -21,7 +21,7 @@ use test_utilities::TemporaryDBPath;
 
 #[test]
 fn external() {
-    let path = TemporaryDBPath::new("externaltest");
+    let path = TemporaryDBPath::new();
 
     {
         let db = DB::open_default(&path).unwrap();
@@ -38,7 +38,7 @@ fn external() {
 
 #[test]
 fn db_vector_as_ref_byte_slice() {
-    let path = TemporaryDBPath::new("db_vector_as_ref_byte_slice");
+    let path = TemporaryDBPath::new();
 
     {
         let db = DB::open_default(&path).unwrap();
@@ -58,7 +58,7 @@ fn get_byte_slice<T: AsRef<[u8]>>(source: &'_ T) -> &'_ [u8] {
 
 #[test]
 fn errors_do_stuff() {
-    let path = TemporaryDBPath::new("errorpath");
+    let path = TemporaryDBPath::new();
     let _db = DB::open_default(&path).unwrap();
     let opts = Options::default();
     // The DB will still be open when we try to destroy it and the lock should fail.
@@ -66,7 +66,6 @@ fn errors_do_stuff() {
         Err(s) => {
             let message = s.to_string();
             assert!(message.find("IO error:").is_some());
-            assert!(message.find("errorpath").is_some());
             assert!(message.find("/LOCK:").is_some());
         }
         Ok(_) => panic!("should fail"),
@@ -75,7 +74,7 @@ fn errors_do_stuff() {
 
 #[test]
 fn writebatch_works() {
-    let path = TemporaryDBPath::new("writebacktest");
+    let path = TemporaryDBPath::new();
     {
         let db = DB::open_default(&path).unwrap();
         {
@@ -126,7 +125,7 @@ fn writebatch_works() {
 
 #[test]
 fn iterator_test() {
-    let path = TemporaryDBPath::new("iteratortest");
+    let path = TemporaryDBPath::new();
     {
         let data = [(b"k1", b"v1111"), (b"k2", b"v2222"), (b"k3", b"v3333")];
         let db = DB::open_default(&path).unwrap();
@@ -146,7 +145,7 @@ fn iterator_test() {
 
 #[test]
 fn iterator_test_past_end() {
-    let path = TemporaryDBPath::new("iteratortest_past_end");
+    let path = TemporaryDBPath::new();
     {
         let db = DB::open_default(&path).unwrap();
         db.put(b"k1", b"v1111").unwrap();
@@ -159,7 +158,7 @@ fn iterator_test_past_end() {
 
 #[test]
 fn iterator_test_tailing() {
-    let path = TemporaryDBPath::new("iteratortest_tailing");
+    let path = TemporaryDBPath::new();
     {
         let data = [(b"k1", b"v1"), (b"k2", b"v2"), (b"k3", b"v3")];
         let mut ro = ReadOptions::default();
@@ -191,7 +190,7 @@ fn iterator_test_tailing() {
 
 #[test]
 fn snapshot_test() {
-    let path = TemporaryDBPath::new("snapshottest");
+    let path = TemporaryDBPath::new();
     {
         let db = DB::open_default(&path).unwrap();
 
@@ -229,7 +228,7 @@ impl SnapshotWrapper {
 
 #[test]
 fn sync_snapshot_test() {
-    let path = TemporaryDBPath::new("sync_snapshottest");
+    let path = TemporaryDBPath::new();
     let db = DB::open_default(&path).unwrap();
 
     assert!(db.put(b"k1", b"v1").is_ok());
@@ -248,7 +247,7 @@ fn sync_snapshot_test() {
 
 #[test]
 fn set_option_test() {
-    let path = TemporaryDBPath::new("set_optionstest");
+    let path = TemporaryDBPath::new();
     {
         let db = DB::open_default(&path).unwrap();
         // set an option to valid values
@@ -285,7 +284,7 @@ fn set_option_test() {
 
 #[test]
 fn test_sequence_number() {
-    let path = TemporaryDBPath::new("test_sequence_number");
+    let path = TemporaryDBPath::new();
     {
         let db = DB::open_default(&path).unwrap();
         assert_eq!(db.latest_sequence_number(), 0);
@@ -310,7 +309,7 @@ impl rocksdb::WriteBatchIterator for OperationCounts {
 
 #[test]
 fn test_get_updates_since_empty() {
-    let path = TemporaryDBPath::new("test_get_updates_since_empty");
+    let path = TemporaryDBPath::new();
     let db = DB::open_default(&path).unwrap();
     // get_updates_since() on an empty database
     let mut iter = db.get_updates_since(0).unwrap();
@@ -319,7 +318,7 @@ fn test_get_updates_since_empty() {
 
 #[test]
 fn test_get_updates_since_multiple_batches() {
-    let path = TemporaryDBPath::new("test_get_updates_since_multiple_batches");
+    let path = TemporaryDBPath::new();
     let db = DB::open_default(&path).unwrap();
     // add some records and collect sequence numbers,
     // verify 3 batches of 1 put each were done
@@ -349,7 +348,7 @@ fn test_get_updates_since_multiple_batches() {
 
 #[test]
 fn test_get_updates_since_one_batch() {
-    let path = TemporaryDBPath::new("test_get_updates_since_one_batch");
+    let path = TemporaryDBPath::new();
     let db = DB::open_default(&path).unwrap();
     db.put(b"key2", b"value2").unwrap();
     // some puts and deletes in a single batch,
@@ -376,7 +375,7 @@ fn test_get_updates_since_one_batch() {
 
 #[test]
 fn test_get_updates_since_nothing() {
-    let path = TemporaryDBPath::new("test_get_updates_since_nothing");
+    let path = TemporaryDBPath::new();
     let db = DB::open_default(&path).unwrap();
     // get_updates_since() with no new changes
     db.put(b"key1", b"value1").unwrap();
@@ -387,7 +386,7 @@ fn test_get_updates_since_nothing() {
 
 #[test]
 fn test_get_updates_since_out_of_range() {
-    let path = TemporaryDBPath::new("test_get_updates_since_out_of_range");
+    let path = TemporaryDBPath::new();
     let db = DB::open_default(&path).unwrap();
     db.put(b"key1", b"value1").unwrap();
     // get_updates_since() with an out of bounds sequence number

@@ -5,7 +5,7 @@ use test_utilities::TemporaryDBPath;
 
 #[test]
 pub fn test_slice_transform() {
-    let db_path = TemporaryDBPath::new("slicetransform_test");
+    let db_path = TemporaryDBPath::new();
     {
         let a1: Box<[u8]> = key(b"aaa1");
         let a2: Box<[u8]> = key(b"aaa2");

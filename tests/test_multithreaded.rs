@@ -23,7 +23,7 @@ const N: usize = 100_000;
 
 #[test]
 pub fn test_multithreaded() {
-    let n = TemporaryDBPath::new("multithreadtest");
+    let n = TemporaryDBPath::new();
     {
         let db = DB::open_default(&n).unwrap();
         let db = Arc::new(db);

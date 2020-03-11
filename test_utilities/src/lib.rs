@@ -12,11 +12,8 @@ pub struct TemporaryDBPath {
 
 impl TemporaryDBPath {
     /// Produces a fresh (non-existent) temporary path which will be DB::destroy'ed automatically.
-    pub fn new(prefix: &str) -> TemporaryDBPath {
-        let dir = tempfile::Builder::new()
-            .prefix(prefix)
-            .tempdir()
-            .expect("Failed to create temporary path for db.");
+    pub fn new() -> TemporaryDBPath {
+        let dir = tempfile::tempdir().expect("Failed to create temporary path for db.");
         let path = dir.path().join("db");
 
         TemporaryDBPath { dir, path }

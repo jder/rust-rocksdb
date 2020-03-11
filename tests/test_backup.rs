@@ -24,8 +24,8 @@ use rocksdb::{
 #[test]
 fn backup_restore() {
     // create backup
-    let path = TemporaryDBPath::new("backup_test");
-    let restore_path = TemporaryDBPath::new("restore_from_backup_path");
+    let path = TemporaryDBPath::new();
+    let restore_path = TemporaryDBPath::new();
     let mut opts = Options::default();
     opts.create_if_missing(true);
     {
